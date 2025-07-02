@@ -8,7 +8,6 @@ h11==0.14.0
 httpcore==1.0.7
 httpx==0.28.1
 idna==3.10
-jiter==0.8.2
 openai==1.57.4
 pydantic==2.10.3
 pydantic_core==2.27.1
@@ -20,3 +19,7 @@ tqdm==4.67.1
 typing_extensions==4.12.2
 uvicorn==0.34.0
 wheel==0.44.0
+langchain
+langchain_pinecone
+pinecone-client
+langchain-upstage
