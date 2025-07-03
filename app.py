@@ -1,4 +1,4 @@
-# pip install fastapi uvicorn openai python-dotenv pinecone-client langchain langchain_pinecone
+# pip install fastapi uvicorn openai python-dotenv pinecone-client langchain langchain_pinecone langchain-openai
 from fastapi import FastAPI
 from pydantic import BaseModel
 import openai
@@ -11,12 +11,14 @@ from langchain_pinecone import PineconeVectorStore
 from pinecone import Pinecone
 from langchain_upstage import UpstageEmbeddings, ChatUpstage
 from prompts import PROXY_LLM_SYSTEM_PROMPT, FINAL_LLM_SYSTEM_PROMPT
+#from langchain_openai import OpenAIEmbeddings
 
 load_dotenv()  # Load .env file if present
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 pinecone_api_key = os.getenv("PINECONE_API_KEY")
-index_name = os.getenv("PINECONE_INDEX_NAME", "galaxy-a35")
+index_name = "job-postings-2"
+#index_name2 = os.getenv("PINECONE_INDEX_NAME2")
 
 app = FastAPI()
 
@@ -146,7 +148,7 @@ async def rag_endpoint(req: RagRequest):
     except json.JSONDecodeError:
         # Fallback to original query if parsing fails
         enhanced_query = latest_query
-        k_value = 10
+        k_value = 5
         threshold = 0.7
     
     # Connect to Pinecone and retrieve context
@@ -196,10 +198,9 @@ async def rag_endpoint(req: RagRequest):
         "query": latest_query,
         "enhanced_query": enhanced_query,
         "k": k_value,
-        #"messages": openai_messages,
-        "retrieved_docs": doc_contents
+        "retrieved_docs": doc_contents,
+        "version": "7.4.1"
     }
-
 
 if __name__ == "__main__":
     import uvicorn
