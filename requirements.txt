@@ -23,3 +23,4 @@ langchain
 langchain_pinecone
 pinecone-client
 langchain-upstage
+langchain_openai
